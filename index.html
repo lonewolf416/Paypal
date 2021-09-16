@@ -41,7 +41,9 @@
                 window.ReactNativeWebView.postMessage(
                   orderData.id + "single field" + "hehe"
                 );
-                window.ReactNativeWebView.postMessage(orderData + "object");
+                window.ReactNativeWebView.postMessage(
+                  JSON.stringify(orderData) + "whole object"
+                );
 
                 console.log(
                   "Capture result",
