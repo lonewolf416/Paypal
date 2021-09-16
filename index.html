@@ -38,9 +38,7 @@
             onApprove: function (data, actions) {
               return actions.order.capture().then(function (orderData) {
                 // Full available details
-                window.ReactNativeWebView.postMessage(
-                  orderData.id + "single field" + "hehe"
-                );
+
                 window.ReactNativeWebView.postMessage(
                   JSON.stringify(orderData) + "whole object"
                 );
