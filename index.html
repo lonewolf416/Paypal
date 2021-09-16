@@ -38,6 +38,11 @@
             onApprove: function (data, actions) {
               return actions.order.capture().then(function (orderData) {
                 // Full available details
+                window.ReactNativeWebView.postMessage(
+                  orderData.id + "single field" + "hehe"
+                );
+                window.ReactNativeWebView.postMessage(orderData + "object");
+
                 console.log(
                   "Capture result",
                   orderData,
@@ -54,9 +59,6 @@
                 // Or go to another URL:  actions.redirect('thank_you.html');
 
                 console.log("single field", orderData.id);
-                window.ReactNativeWebView.postMessage(
-                  orderData.id + "single field" + "hehe"
-                );
               });
             },
 
