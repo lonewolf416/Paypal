@@ -5,6 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <!-- <script
+      src="https://www.paypal.com/sdk/js?client-id=AZ0iVWSwb4Srn_cegzIPt-tmcWqjBhm_haDY07-kYIoDLAWRJ4HHR2LaXePvVUE5XtYKpVQCgZMVLGVQ&currency=USD"
+      data-sdk-integration-source="button-factory"
+    ></script> -->
   </head>
   <body>
     <div id="smart-button-container">
@@ -12,19 +16,35 @@
         <div id="paypal-button-container"></div>
       </div>
     </div>
-    <script
+    <!-- <script
       src="https://www.paypal.com/sdk/js?client-id=AZ0iVWSwb4Srn_cegzIPt-tmcWqjBhm_haDY07-kYIoDLAWRJ4HHR2LaXePvVUE5XtYKpVQCgZMVLGVQ&currency=USD"
       data-sdk-integration-source="button-factory"
-    ></script>
+    ></script> -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>
+      var head = document.getElementsByTagName("head")[0];
       const urlSearchParams = new URLSearchParams(window.location.search);
       const params = Object.fromEntries(urlSearchParams.entries());
       var offer;
-      $(document).ready(function () {
-        console.log("doc ready cha rha hai");
-        console.log(params);
+      function a(currencycode, cb) {
+        console.log(currencycode); // log to the console of recent Browsers
+        let myScript = document.createElement("script");
+        myScript.setAttribute(
+          "src",
+          "https://www.paypal.com/sdk/js?client-id=AZ0iVWSwb4Srn_cegzIPt-tmcWqjBhm_haDY07-kYIoDLAWRJ4HHR2LaXePvVUE5XtYKpVQCgZMVLGVQ&currency=" +
+            currencycode.toUpperCase()
+        );
+        myScript.setAttribute("data-sdk-integration-source", "button-factory");
+        head.appendChild(myScript);
+        window.onload = function () {
+          initPayPalButton();
+        };
+      }
+
+      a(params.currency, function () {
+        initPayPalButton();
       });
+
       function initPayPalButton() {
         paypal
           .Buttons({
@@ -34,7 +54,6 @@
               layout: "vertical",
               label: "checkout",
             },
-
             createOrder: function (data, actions) {
               return actions.order.create({
                 purchase_units: [
@@ -47,41 +66,34 @@
                 ],
               });
             },
-
             onApprove: function (data, actions) {
               return actions.order.capture().then(function (orderData) {
                 // Full available details
-
                 window.ReactNativeWebView.postMessage(
                   JSON.stringify(orderData)
                 );
-
                 console.log(
                   "Capture result",
                   orderData,
                   JSON.stringify(orderData, null, 2)
                 );
-
                 // Show a success message within this page, e.g.
                 const element = document.getElementById(
                   "paypal-button-container"
                 );
                 element.innerHTML = "";
                 element.innerHTML = "<h3>Thank you for your payment!</h3>";
-
                 // Or go to another URL:  actions.redirect('thank_you.html');
-
                 console.log("single field", orderData.id);
               });
             },
-
             onError: function (err) {
               console.log(err);
             },
           })
           .render("#paypal-button-container");
       }
-      initPayPalButton();
+      //  initPayPalButton();
     </script>
   </body>
 </html>
