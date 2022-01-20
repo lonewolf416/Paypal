@@ -31,10 +31,10 @@
         let myScript = document.createElement("script");
         myScript.setAttribute(
           "src",
-          "https://www.paypal.com/sdk/js?client-id=AZ0iVWSwb4Srn_cegzIPt-tmcWqjBhm_haDY07-kYIoDLAWRJ4HHR2LaXePvVUE5XtYKpVQCgZMVLGVQ&currency=" +
+          "https://www.paypal.com/sdk/js?client-id=AZ0iVWSwb4Srn_cegzIPt-tmcWqjBhm_haDY07-kYIoDLAWRJ4HHR2LaXePvVUE5XtYKpVQCgZMVLGVQ&disable-funding=paylater&currency=" +
             currencycode.toUpperCase()
         );
-        myScript.setAttribute("data-sdk-integration-source", "button-factory");
+        // myScript.setAttribute("data-sdk-integration-source", "button-factory");
         head.appendChild(myScript);
         window.onload = function () {
           initPayPalButton();
