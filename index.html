@@ -16,13 +16,15 @@
       src="https://www.paypal.com/sdk/js?client-id=AZ0iVWSwb4Srn_cegzIPt-tmcWqjBhm_haDY07-kYIoDLAWRJ4HHR2LaXePvVUE5XtYKpVQCgZMVLGVQ&currency=USD"
       data-sdk-integration-source="button-factory"
     ></script>
-    <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>
-      // var offer;
-      // $(document).ready(function () {
-      //   console.log("doc ready cha rha hai");
-      //   offer = getParameterByName("offer");
-      // });
+      const urlSearchParams = new URLSearchParams(window.location.search);
+      const params = Object.fromEntries(urlSearchParams.entries());
+      var offer;
+      $(document).ready(function () {
+        console.log("doc ready cha rha hai");
+        console.log(params);
+      });
       function initPayPalButton() {
         paypal
           .Buttons({
@@ -36,7 +38,12 @@
             createOrder: function (data, actions) {
               return actions.order.create({
                 purchase_units: [
-                  { amount: { currency_code: "USD", value: parseInt(offer) } },
+                  {
+                    amount: {
+                      currency_code: "USD",
+                      value: parseInt(params.offer),
+                    },
+                  },
                 ],
               });
             },
