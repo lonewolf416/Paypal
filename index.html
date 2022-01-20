@@ -17,6 +17,11 @@
       data-sdk-integration-source="button-factory"
     ></script>
     <script>
+      var offer;
+      $(document).ready(function () {
+        console.log("doc ready cha rha hai");
+        offer = getParameterByName("offer");
+      });
       function initPayPalButton() {
         paypal
           .Buttons({
@@ -30,7 +35,7 @@
             createOrder: function (data, actions) {
               return actions.order.create({
                 purchase_units: [
-                  { amount: { currency_code: "USD", value: 10 } },
+                  { amount: { currency_code: "USD", value: parseInt(offer) } },
                 ],
               });
             },
